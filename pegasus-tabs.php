@@ -1,44 +1,30 @@
-	<?php 
+<?php 
 /*
 Plugin Name: Pegasus Tabs Plugin
-Plugin URI:  https://developer.wordpress.org/plugins/the-basics/
+Plugin URI:	 https://developer.wordpress.org/plugins/the-basics/
 Description: This allows you to create tabs on your website with just a shortcode.
-Version:     1.0
-Author:      Jim O'Brien
-Author URI:  https://visionquestdevelopment.com/
-License:     GPL2
+Version:	 1.0
+Author:		 Jim O'Brien
+Author URI:	 https://visionquestdevelopment.com/
+License:	 GPL2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: wporg
 Domain Path: /languages
 */
 
-	/**
-	 * Silence is golden; exit if accessed directly
-	 */
-	if ( ! defined( 'ABSPATH' ) ) {
-		exit;
-	}
-
+	global $wpdb; 
+	
+	add_action("admin_menu", "pegasus_tabs_menu_item");
 	function pegasus_tabs_menu_item() {
 		add_menu_page("Tabs", "Tabs", "manage_options", "pegasus_tabs_plugin_options", "pegasus_tabs_plugin_settings_page", null, 99);
 	}
-	add_action("admin_menu", "pegasus_tabs_menu_item");
+	
 	
 	
 	function pegasus_tabs_plugin_settings_page() { ?>
-	    <div class="wrap pegasus-wrap">
-	    <h1>Tabs</h1>
+		<div class="wrap pegasus-wrap">
+		<h1>Tabs</h1>
 		
-		
-	    <?php /* ?>
-		<form method="post" action="options.php">
-	        <?php
-	            settings_fields("section");
-	            do_settings_sections("theme-options");      
-	            submit_button(); 
-	        ?>          
-	    </form>
-		<?php */ ?>
 		<p>Usage: <pre>[tabs][tab class="first" title="Home"]Vivamus suscipit tortor eget felis porttitor volutpat. [/tab][tab class="second" title="Profile"]Pellentesque in ipsum id orci porta dapibus. [/tab][/tabs]</pre> </p>
 		
 		</div>
@@ -46,9 +32,29 @@ Domain Path: /languages
 	}
 	
 	
+	function pegasus_tabs_plugin_styles() {
+		
+		wp_enqueue_style( 'tabs-css', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'css/tabs.css', array(), null, 'all' );
+		//wp_enqueue_style( 'slippery-slider-css', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'css/slippery-slider.css', array(), null, 'all' );
+		
+	}
+	add_action( 'wp_enqueue_scripts', 'pegasus_tabs_plugin_styles' );
+	
+	/**
+	* Proper way to enqueue JS 
+	*/
+	function pegasus_tabs_plugin_js() {
+		
+		//wp_enqueue_script( 'tabs-js', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'js/plugin.js', array( 'jquery' ), null, true );
+		wp_enqueue_script( 'pegasus-tabs-plugin-js', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'js/plugin.js', array( 'jquery' ), null, true );
+		
+	} //end function
+	add_action( 'wp_enqueue_scripts', 'pegasus_tabs_plugin_js' );
+	
 	/**
 	* Tabs Short Code
 	*/
+	
 	if ( ! class_exists( 'TabsClass' ) ) {
 	class TabsClass {
 
@@ -61,7 +67,7 @@ Domain Path: /languages
 		}
 
 		function tabs_wrap ( $args, $content = null ) {
-			$output = '<div class="octane-tabs"><ul class="octane-tabs-nav" >' . do_shortcode($content) . '</ul>';
+			$output = '<div class="js-tab-widget"><ul class="tab-list" >' . do_shortcode($content) . '</ul>';
 			
 			//$output .= '<div class="octane-tabs-content">';
 			$output .= $this->_tabs_divs;
@@ -78,12 +84,12 @@ Domain Path: /languages
 			), $args));
 
 			$output = '
-				<li class="'.$class.'">
-					<a href="#" >'.$title.'</a>
+				<li class="tab-item '.$class.'">
+					<a class="tab-link" href="#tab-'.$id.'" >'.$title.'</a>
 				</li>
 			';
 
-			$this->_tabs_divs.= '<div class="octane-tabs-content">' .$content. '</div>';
+			$this->_tabs_divs.= '<section id="tab-'.$id.'" class="tab-panel">' .$content. '</section>';
 
 			return $output;
 		}
@@ -93,9 +99,12 @@ Domain Path: /languages
 	}
 	
 	
+	
+	
+	add_action( 'admin_enqueue_scripts', 'pegasus_tabs_plugin_admin_scripts' ); 
 	function pegasus_tabs_plugin_admin_scripts() {
 		
-		wp_enqueue_style( 'pegasus-admin-css', get_stylesheet_uri() );
+		wp_enqueue_style( 'pegasus-tabs-admin-css', get_stylesheet_uri() );
 
 		ob_start();
 		?>
@@ -132,8 +141,8 @@ Domain Path: /languages
 			}
 		
 		<?php
-		wp_add_inline_style( 'pegasus-admin-css', ob_get_clean() );
+		wp_add_inline_style( 'pegasus-tabs-admin-css', ob_get_clean() );
 	}
-	add_action( 'admin_enqueue_scripts', 'pegasus_tabs_plugin_admin_scripts' );
 	
-		
+	
+	?>

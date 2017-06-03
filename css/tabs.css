@@ -1,0 +1,89 @@
+
+
+.tab-list {
+  
+  padding: 0;
+  margin: 0;
+}
+
+.tab-item {
+  display: block;
+}
+
+.tab-item[data-tab-active] {
+  
+  -webkit-transition: all 150ms cubic-bezier(0.42, 0, 1, 1);
+  transition: all 150ms cubic-bezier(0.42, 0, 1, 1);
+}
+
+.tab-link {
+  color: #fff;
+  display: block;
+  padding: 1rem 2rem;
+  position: relative;
+  text-decoration: none;
+  -webkit-transition: all 150ms cubic-bezier(0.42, 0, 1, 1);
+  transition: all 150ms cubic-bezier(0.42, 0, 1, 1);
+}
+
+.tab-panel {
+  
+  padding: 1rem;
+      box-shadow: 1px 1px 5px #777;
+    border-bottom-left-radius: 7px;
+    border-bottom-right-radius: 7px;
+}
+
+.tab-panel h2 {
+  margin-top: 0;
+}
+
+.tab-panel[aria-hidden="true"] {
+  display: none;
+}
+
+@media screen and (min-width: 800px) {
+  .tab-item {
+    display: inline-block;
+  }
+
+  .tab-link {
+    display: inline-block;
+  }
+
+  
+}
+
+
+	
+	/*======================
+		TABS CSS
+	======================*/
+	ul.tab-list { margin: 0; padding: 0; list-style-type: none; box-shadow: 1px 1px 5px #777;
+		border-top-left-radius: 7px;  border-top-right-radius: 7px; }
+	ul.tab-list li { 
+		list-style:none; 
+	  display:inline-block; 
+	  position: relative; 
+	  box-shadow: 0px 0px 5px #777;
+		border-top-left-radius: 7px;  border-top-right-radius: 7px;
+	  text-align:center;
+		
+	}
+
+	ul.tab-list > li.active > a, ul.tab-list > li.active > a:focus, ul.tab-list > li.active > a:hover { border-width: 0; }
+	ul.tab-list > li > a { border: none; color: #666; }
+	ul.tab-list > li.active > a, ul.tab-list > li > a:hover {  color: #4285F4 !important; background: transparent; }
+	ul.tab-list > li > a::after { content: ""; background: #4285F4; height: 2px; position: absolute; width: 100%; left: 0px; bottom: -1px; transition: all 250ms ease 0s; transform: scale(0); }
+	ul.tab-list > li.active > a::after, ul.tab-list > li[data-tab-active] > a::after, ul.tab-list > li:hover > a::after { transform: scale(1); }
+
+	ul.tab-list > li > a::after { background: #21527d none repeat scroll 0% 0%; color: #fff; }
+
+	div.octane-tabs-content {padding:20px; box-shadow: 1px 1px 5px #777;
+		border-bottom-left-radius: 7px; border-bottom-right-radius: 7px; }
+
+	ul.tab-list li a.current { color: red; }
+
+	div.octane-tabs-content{ display:none; }
+
+	div.octane-tabs-content.current-tab { display:block; }
