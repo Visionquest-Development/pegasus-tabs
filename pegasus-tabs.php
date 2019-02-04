@@ -16,7 +16,7 @@ Domain Path: /languages
 	
 	add_action("admin_menu", "pegasus_tabs_menu_item");
 	function pegasus_tabs_menu_item() {
-		add_menu_page("Tabs", "Tabs", "manage_options", "pegasus_tabs_plugin_options", "pegasus_tabs_plugin_settings_page", null, 99);
+		//add_menu_page("Tabs", "Tabs", "manage_options", "pegasus_tabs_plugin_options", "pegasus_tabs_plugin_settings_page", null, 99);
 	}
 	
 	
