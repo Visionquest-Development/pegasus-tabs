@@ -79,11 +79,11 @@
 
 	ul.tab-list > li > a::after { background: #21527d none repeat scroll 0% 0%; color: #fff; }
 
-	div.octane-tabs-content {padding:20px; box-shadow: 1px 1px 5px #777;
+	div.pegasus-tabs-content {padding:20px; box-shadow: 1px 1px 5px #777;
 		border-bottom-left-radius: 7px; border-bottom-right-radius: 7px; }
 
 	ul.tab-list li a.current { color: red; }
 
-	div.octane-tabs-content{ display:none; }
+	div.pegasus-tabs-content{ display:none; }
 
-	div.octane-tabs-content.current-tab { display:block; }
+	div.pegasus-tabs-content.current-tab { display:block; }

@@ -88,6 +88,10 @@ Domain Path: /languages
 					'class' => '',
 				), $args));
 
+				if ( '' === $id ) {
+					$id = 1;
+				}
+
 				$output = '
 					<li class="tab-item ' . $class . '">
 						<a class="tab-link" href="#tab-' . $id . '" >' . $title . '</a>
@@ -95,6 +99,8 @@ Domain Path: /languages
 				';
 
 				$this->_tabs_divs.= '<section id="tab-' . $id . '" class="tab-panel">' . $content . '</section>';
+
+				$id++;
 
 				return $output;
 			}
