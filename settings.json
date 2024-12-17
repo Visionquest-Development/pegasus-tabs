@@ -1,0 +1,23 @@
+{
+  "rows": [
+    {
+      "section_name": "Tabs Settings",
+      "rows": [
+        {
+          "name": "Class",
+          "attribute": "class",
+          "options": "Any class name",
+          "description": "Add a class to the tab container",
+          "example": "class=\"test\""
+        },
+        {
+          "name": "Title",
+          "attribute": "title",
+          "options": "Any text",
+          "description": "Add a title to the popup container",
+          "example": "title=\"Home\""
+        }
+      ]
+    }
+  ]
+}

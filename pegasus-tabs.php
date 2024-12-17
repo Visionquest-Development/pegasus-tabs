@@ -95,8 +95,63 @@ Domain Path: /languages
 
 			<p style="color:red;">MAKE SURE YOU DO NOT HAVE ANY RETURNS OR <?php echo htmlspecialchars('<br>'); ?>'s IN YOUR SHORTCODES, OTHERWISE IT WILL NOT WORK CORRECTLY</p>
 
+			<div>
+				<?php echo pegasus_tabs_settings_table(); ?>
+			</div>
 		</div>
 	<?php
+	}
+
+	function pegasus_tabs_settings_table() {
+
+		$data = json_decode( file_get_contents( plugin_dir_path( __FILE__ ) . 'settings.json' ), true );
+
+		if (json_last_error() !== JSON_ERROR_NONE) {
+			return '<p style="color: red;">Error: Invalid JSON provided.</p>';
+		}
+
+		// Start building the HTML
+		$html = '<table border="0" cellpadding="1" class="table pegasus-table" align="left">
+		<thead>
+		<tr style="background-color: #282828;">
+		<td <span><strong>Name</strong></span></td>
+		<td <span><strong>Attribute</strong></span></td>
+		<td <span><strong>Options</strong></span></td>
+		<td <span><strong>Description</strong></span></td>
+		<td <span><strong>Example</strong></span></td>
+		</tr>
+		</thead>
+		<tbody>';
+
+		// Iterate over the data to populate rows
+		if (!empty($data['rows'])) {
+			foreach ($data['rows'] as $section) {
+				// Add section header
+				$html .= '<tr >';
+				$html .= '<td colspan="5">';
+				$html .= '<span>';
+				$html .= '<strong>' . htmlspecialchars($section['section_name']) . '</strong>';
+				$html .= '</span>';
+				$html .= '</td>';
+				$html .= '</tr>';
+
+				// Add rows in the section
+				foreach ($section['rows'] as $row) {
+					$html .= '<tr>
+						<td >' . htmlspecialchars($row['name']) . '</td>
+						<td >' . htmlspecialchars($row['attribute']) . '</td>
+						<td >' . nl2br(htmlspecialchars($row['options'])) . '</td>
+						<td >' . nl2br(htmlspecialchars($row['description'])) . '</td>
+						<td ><code>' . htmlspecialchars($row['example']) . '</code></td>
+					</tr>';
+				}
+			}
+		}
+
+		$html .= '</tbody></table>';
+
+		// Return the generated HTML
+		return $html;
 	}
 
 	//add_action("admin_menu", "pegasus_tabs_menu_item");
